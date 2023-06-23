@@ -4,10 +4,31 @@ import MediaItem from "./MediaItem";
 import { TbPlaylist } from 'react-icons/tb';
 import { AiOutlinePlus } from 'react-icons/ai';
 
-const Library = () => {
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
+import { Song } from "@/types";
+import useOnplay from "@/hooks/useOnPlay";
 
-  const onClick = () => {}
+interface LibraryProps {
+  songs: Song[]
+}
 
+const Library:React.FC<LibraryProps> = ({ songs }) => {
+  const authModal = useAuthModal();
+  const uploadModal = useUploadModal();
+  const { user } = useUser();
+
+  const onPlay = useOnplay(songs);
+
+  const onClick = () => {
+    if(!user) {
+      return authModal.onOpen();
+    };
+
+    return uploadModal.onOpen();
+  }
+  
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 pt-4">
@@ -29,13 +50,13 @@ const Library = () => {
         />
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">
-        {/* {sessionStorage.map(s => (
+        {songs.map(s => (
           <MediaItem 
           onClick={(id: string) => onPlay(id)}
-          item={s.id}
+          key={s.id}
           data={s}
           />
-        ))} */}
+        ))}
       </div>
     </div>
   );
