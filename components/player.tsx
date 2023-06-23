@@ -15,7 +15,6 @@ const Player = () => {
     return null;
   }
 
-  console.log('/////////////////////////');
   
   return (
     <div 

@@ -21,7 +21,7 @@ interface PlayContentProps {
 const PlayContent: React.FC<PlayContentProps> = ({ song, songUrl }) => {
 
   const player = usePlayer();
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.5);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
@@ -170,7 +170,7 @@ const PlayContent: React.FC<PlayContentProps> = ({ song, songUrl }) => {
       <div className="hidden md:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
           <VolumeIcon size={24} onClick={toggleMute} className="cursor-pointer" />
-          <Slider value={volume} onChange={(value) => setVolume(value)} />
+          <Slider value={volume} onChange={(e) => setVolume(e)} />
         </div>
       </div>
     </div>
